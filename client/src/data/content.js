@@ -397,12 +397,29 @@ export const contact = {
   body: 'Tell us about your customer support requirements and our team will contact you to discuss an appropriate solution.',
   formTitle: 'Contact Form',
   submitLabel: 'Submit Request',
+  // Field labels are verbatim from the client's content document.
+  // Required fields are the four the client confirmed in chat; the rest
+  // qualify the lead but must never block a submission.
   fields: {
     fullName: 'Full Name',
-    email: 'Email',
+    company: 'Company',
+    email: 'Business Email',
     phone: 'Phone Number',
+    country: 'Country',
+    representatives: 'Number of Customer Service Representatives Required',
+    servicesNeeded: 'Services Needed',
     message: 'Tell Us About Your Requirements',
   },
+  required: ['fullName', 'email', 'phone', 'message'],
+  serviceOptions: [
+    'Inbound Customer Support',
+    'Outbound Customer Engagement',
+    'Email & Chat Support',
+    'Back-Office Support',
+    'After-Hours Support',
+    'Dedicated Customer Service Team',
+    'Other',
+  ],
 }
 
 export const nav = [
