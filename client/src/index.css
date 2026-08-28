@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --nav-h: 76px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--nav-h);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply font-sans text-navy-700;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-navy-800;
+  }
+
+  ::selection {
+    @apply bg-azure-500/20 text-navy-900;
+  }
+
+  /* Consistent, brand-tinted focus ring for keyboard users */
+  :focus-visible {
+    @apply outline-none ring-2 ring-azure-500 ring-offset-2 ring-offset-white rounded-sm;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-container px-5 sm:px-8 lg:px-10;
+  }
+
+  /* Thin gradient rule used under eyebrows and as section dividers */
+  .rule-accent {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-navy-200 to-transparent;
+  }
+
+  .text-gradient-brand {
+    @apply bg-gradient-to-r from-azure-400 via-azure-300 to-moss-300 bg-clip-text text-transparent;
+  }
+
+  /* Frosted card used on dark navy panels */
+  .glass-dark {
+    @apply border border-white/10 bg-white/[0.06] backdrop-blur-md;
+  }
+
+  /* Subtle grid texture for dark sections */
+  .grid-texture {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size: 62px 62px;
+  }
+}
+
+@layer utilities {
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .pause-on-hover:hover {
+    animation-play-state: paused;
+  }
+}

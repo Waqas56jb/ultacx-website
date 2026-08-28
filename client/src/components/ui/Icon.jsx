@@ -1,0 +1,117 @@
+import {
+  BadgeCheck,
+  Building2,
+  CalendarRange,
+  Circle,
+  ClipboardCheck,
+  Clock,
+  Clock4,
+  Cpu,
+  FileCog,
+  FileLock2,
+  FolderKanban,
+  Gauge,
+  Gem,
+  Globe2,
+  GraduationCap,
+  Handshake,
+  Headset,
+  HeartPulse,
+  KeyRound,
+  Landmark,
+  Languages,
+  Lightbulb,
+  LineChart,
+  MessagesSquare,
+  MonitorSmartphone,
+  PencilRuler,
+  PhoneIncoming,
+  PhoneOutgoing,
+  PiggyBank,
+  Plane,
+  RefreshCw,
+  Rocket,
+  Scale,
+  Search,
+  ServerCog,
+  Share2,
+  ShieldCheck,
+  ShoppingBag,
+  Sparkles,
+  Target,
+  Telescope,
+  TrendingUp,
+  TriangleAlert,
+  Truck,
+  Users,
+  UsersRound,
+  Waves,
+  Wrench,
+} from 'lucide-react'
+
+/**
+ * Explicit registry of every icon referenced by `icon:` keys in src/data/content.js.
+ *
+ * This is deliberately a static map rather than `import * as Lucide` — a namespace
+ * import indexed at runtime cannot be tree-shaken, which pulled all ~1,500 Lucide
+ * icons into the bundle. Adding a new icon name to content.js means adding it here.
+ */
+const REGISTRY = {
+  BadgeCheck,
+  Building2,
+  CalendarRange,
+  ClipboardCheck,
+  Clock,
+  Clock4,
+  Cpu,
+  FileCog,
+  FileLock2,
+  FolderKanban,
+  Gauge,
+  Gem,
+  Globe2,
+  GraduationCap,
+  Handshake,
+  Headset,
+  HeartPulse,
+  KeyRound,
+  Landmark,
+  Languages,
+  Lightbulb,
+  LineChart,
+  MessagesSquare,
+  MonitorSmartphone,
+  PencilRuler,
+  PhoneIncoming,
+  PhoneOutgoing,
+  PiggyBank,
+  Plane,
+  RefreshCw,
+  Rocket,
+  Scale,
+  Search,
+  ServerCog,
+  Share2,
+  ShieldCheck,
+  ShoppingBag,
+  Sparkles,
+  Target,
+  Telescope,
+  TrendingUp,
+  TriangleAlert,
+  Truck,
+  Users,
+  UsersRound,
+  Waves,
+  Wrench,
+}
+
+/**
+ * Resolves a Lucide icon by the string name stored in src/data/content.js.
+ * Falls back to a neutral shape if a name is ever missing, so a bad key can
+ * never blank out a card or crash the page.
+ */
+export default function Icon({ name, className = 'h-5 w-5', strokeWidth = 1.75, ...props }) {
+  const Cmp = REGISTRY[name] || Circle
+  return <Cmp className={className} strokeWidth={strokeWidth} aria-hidden="true" {...props} />
+}
