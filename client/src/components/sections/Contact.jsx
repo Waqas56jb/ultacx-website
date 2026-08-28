@@ -1,30 +1,25 @@
 import { useState } from 'react'
-import { ArrowRight, CheckCircle2, Loader2, Mail, MapPin, Phone } from 'lucide-react'
+import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import Section from '../ui/Section.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import Button from '../ui/Button.jsx'
 import Reveal from '../ui/Reveal.jsx'
-import { company, contact } from '../../data/content.js'
+import Icon from '../ui/Icon.jsx'
+import { company, contact, home, partner, services } from '../../data/content.js'
 
-// TODO: replace with the client's real contact details before launch.
-const contactDetails = [
-  { key: 'email', Icon: Mail, label: 'Email', value: 'To be provided' },
-  { key: 'phone', Icon: Phone, label: 'Phone', value: 'To be provided' },
-  { key: 'office', Icon: MapPin, label: 'Office', value: 'To be provided' },
-]
-
-/* Structural process wording only — no response-time or turnaround promises. */
-const nextSteps = [
-  'We review the requirements you share.',
-  'We arrange an introductory conversation.',
-  'We outline a support model for your review.',
-]
+/*
+ * NOTE ON FACTS: the client supplied no email address, phone number, office
+ * address or service-level commitment. None is rendered here and none may be
+ * invented. The brand panel therefore carries the client's own copy only, and
+ * the form itself is the single route into the business.
+ */
 
 const EMPTY_FORM = { fullName: '', email: '', phone: '', message: '', botField: '' }
 
 const INPUT_BASE =
-  'w-full rounded-xl border bg-white px-4 py-3.5 text-navy-800 ' +
-  'placeholder:text-navy-300 transition focus:ring-2 focus:ring-azure-500/20 outline-none'
+  'w-full min-w-0 rounded-xl border bg-white px-4 py-3.5 text-navy-800 ' +
+  'placeholder:text-navy-300 outline-none transition duration-300 ' +
+  'focus:ring-2 focus:ring-azure-500/25 disabled:bg-navy-50/60'
 
 function fieldClass(hasError) {
   return [
@@ -33,7 +28,7 @@ function fieldClass(hasError) {
   ].join(' ')
 }
 
-/** Client-side validation — all four fields are required. */
+/** Client-side validation. Functional interface strings only, never marketing copy. */
 function validate(values) {
   const errors = {}
   const name = values.fullName.trim()
@@ -53,13 +48,13 @@ function validate(values) {
 }
 
 /**
- * TODO — THE SUBMISSION BACKEND IS NOT WIRED UP YET.
+ * TODO - THE SUBMISSION BACKEND IS NOT WIRED UP YET.
  *
  * Replace the simulated delay below with a real submission. Two options:
- *   1. A hosted form endpoint (Web3Forms, Formspree, Basin) — no server required.
+ *   1. A hosted form endpoint (Web3Forms, Formspree, Basin) - no server needed.
  *      Keep the access key in an env var (e.g. VITE_WEB3FORMS_KEY), never in source.
  *   2. A serverless function (Vercel / Netlify / Cloudflare) that forwards the
- *      payload to the client's inbox or CRM — preferred if the key must stay private.
+ *      payload to the client inbox or CRM - preferred if the key must stay private.
  *
  * Throw on a non-ok response so the caller can switch to the 'error' state.
  *
@@ -70,7 +65,6 @@ function validate(values) {
  *     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
  *     body: JSON.stringify({
  *       access_key: import.meta.env.VITE_WEB3FORMS_KEY,
- *       subject: 'New enquiry from the ULTA CX website',
  *       name: payload.fullName,
  *       email: payload.email,
  *       phone: payload.phone,
@@ -87,7 +81,7 @@ async function sendEnquiry(payload) {
 }
 
 /**
- * Contact — the dark detail panel paired with a real, validated enquiry form.
+ * Contact - a dark brand panel paired with a real, validated enquiry form.
  * Submission flows through 'idle' | 'submitting' | 'success' | 'error'.
  */
 export default function Contact() {
@@ -104,7 +98,7 @@ export default function Contact() {
       label: contact.fields.fullName,
       type: 'text',
       autoComplete: 'name',
-      placeholder: 'Your full name',
+      placeholder: '',
       className: 'sm:col-span-2',
     },
     {
@@ -113,7 +107,7 @@ export default function Contact() {
       label: contact.fields.email,
       type: 'email',
       autoComplete: 'email',
-      placeholder: 'you@company.com',
+      placeholder: 'name@company.com',
       className: '',
     },
     {
@@ -122,7 +116,7 @@ export default function Contact() {
       label: contact.fields.phone,
       type: 'tel',
       autoComplete: 'tel',
-      placeholder: 'Your phone number',
+      placeholder: '',
       className: '',
     },
   ]
@@ -148,7 +142,7 @@ export default function Contact() {
   async function handleSubmit(event) {
     event.preventDefault()
 
-    // Honeypot: a filled hidden field means an automated submission — drop it silently.
+    // Honeypot: a filled hidden field means an automated submission - drop it silently.
     if (values.botField) {
       setValues(EMPTY_FORM)
       setStatus('success')
@@ -191,10 +185,10 @@ export default function Contact() {
       </SectionHeading>
 
       <div className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-12 xl:gap-14">
-        {/* Information panel */}
-        <div className="lg:col-span-5">
+        {/* Brand panel */}
+        <div className="min-w-0 lg:col-span-5">
           <Reveal className="h-full">
-            <div className="relative h-full overflow-hidden rounded-3xl bg-navy-800 p-8 shadow-deep lg:p-10">
+            <div className="relative h-full overflow-hidden rounded-3xl bg-navy-800 p-6 shadow-deep sm:p-8 lg:p-10">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 bg-mesh-navy opacity-90"
@@ -208,62 +202,46 @@ export default function Contact() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-azure-200">
                   {company.tagline}
                 </p>
-                <h3 className="mt-5 text-display-sm text-white">Get in touch</h3>
-                <p className="mt-4 font-display text-lg leading-snug tracking-tight text-navy-100/80">
-                  {company.promise}
+
+                <h3 className="mt-5 text-balance text-display-sm text-white">{company.promise}</h3>
+
+                <p className="mt-4 font-display text-lg leading-snug tracking-tight text-navy-100/75">
+                  {home.closingLine}
                 </p>
 
-                <ul className="mt-9 space-y-5">
-                  {contactDetails.map(({ key, Icon, label, value }) => (
-                    <li key={key} className="flex items-start gap-4">
-                      <span className="glass-dark inline-flex shrink-0 rounded-xl p-3 text-azure-200">
-                        <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                <div aria-hidden="true" className="mt-8 h-px w-16 bg-gold-400/70" />
+
+                <h4 className="mt-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-navy-100/60">
+                  {services.eyebrow}
+                </h4>
+
+                <ul className="mt-6 space-y-4">
+                  {services.items.map((item) => (
+                    <li key={item.id} className="flex items-start gap-4">
+                      <span className="inline-flex shrink-0 rounded-xl bg-white/10 p-3 text-azure-200">
+                        <Icon name={item.icon} className="h-5 w-5" />
                       </span>
-                      <span className="min-w-0">
-                        <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-navy-100/60">
-                          {label}
-                        </span>
-                        <span className="mt-1 block break-words italic text-navy-100/50">
-                          {value}
-                        </span>
+                      <span className="min-w-0 self-center text-[15px] font-medium leading-snug text-navy-100/75">
+                        {item.title}
                       </span>
                     </li>
                   ))}
                 </ul>
-
-                <div aria-hidden="true" className="mt-9 h-px w-16 bg-gold-400/70" />
-
-                <h4 className="mt-7 text-sm font-semibold uppercase tracking-[0.18em] text-white">
-                  What happens next
-                </h4>
-                <ol className="mt-5 space-y-4">
-                  {nextSteps.map((step, index) => (
-                    <li key={step} className="flex items-start gap-4">
-                      <span
-                        aria-hidden="true"
-                        className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-xs font-semibold text-azure-200"
-                      >
-                        {index + 1}
-                      </span>
-                      <span className="text-[15px] leading-relaxed text-navy-100/75">{step}</span>
-                    </li>
-                  ))}
-                </ol>
               </div>
             </div>
           </Reveal>
         </div>
 
         {/* Form panel */}
-        <div className="lg:col-span-7">
+        <div className="min-w-0 lg:col-span-7">
           <Reveal delay={120} className="h-full">
-            <div className="h-full rounded-3xl border border-navy-100 bg-white p-8 shadow-soft lg:p-10">
+            <div className="h-full rounded-3xl border border-navy-100 bg-white p-6 shadow-soft sm:p-8 lg:p-10">
               <h3 className="text-display-sm text-navy-800">{contact.formTitle}</h3>
               <div aria-hidden="true" className="mt-5 h-px w-full bg-accent-sweep opacity-40" />
 
-              <div aria-live="polite" className="mt-8">
+              <div className="mt-8">
                 {status === 'success' ? (
-                  <div className="py-6 text-center sm:py-10">
+                  <div role="status" className="py-6 text-center sm:py-10">
                     <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-moss-50">
                       <CheckCircle2
                         className="h-8 w-8 text-moss-500"
@@ -272,11 +250,10 @@ export default function Contact() {
                       />
                     </span>
                     <h4 className="mt-6 text-xl font-semibold tracking-tight text-navy-800">
-                      Thank you — your request has been received.
+                      Request received
                     </h4>
-                    <p className="mx-auto mt-3 max-w-md text-base leading-relaxed text-navy-500">
-                      Your details have been passed to our team, who will be in touch to discuss
-                      your customer experience requirements.
+                    <p className="mx-auto mt-3 max-w-md text-balance font-display text-lg leading-snug text-navy-500">
+                      {partner.closing}
                     </p>
                     <div className="mt-8 flex justify-center">
                       <Button
@@ -288,7 +265,7 @@ export default function Contact() {
                       >
                         Send another message
                         <ArrowRight
-                          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                          className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5"
                           aria-hidden="true"
                         />
                       </Button>
@@ -296,19 +273,17 @@ export default function Contact() {
                   </div>
                 ) : (
                   <form noValidate onSubmit={handleSubmit}>
-                    {/* Honeypot — invisible to people, tempting to bots. */}
-                    <div className="hidden" aria-hidden="true" tabIndex={-1}>
-                      <label htmlFor="company_website">Company website</label>
+                    {/* Honeypot - display:none, so it is never focusable or announced. */}
+                    <div className="hidden" aria-hidden="true">
+                      <label htmlFor="contact-company-website">Company website</label>
                       <input
-                        id="company_website"
-                        name="_gotcha"
+                        id="contact-company-website"
+                        name="botField"
                         type="text"
                         tabIndex={-1}
                         autoComplete="off"
                         value={values.botField}
-                        onChange={(event) =>
-                          setValues((current) => ({ ...current, botField: event.target.value }))
-                        }
+                        onChange={handleChange}
                       />
                     </div>
 
@@ -316,7 +291,7 @@ export default function Contact() {
                       {textFields.map((field) => {
                         const error = errors[field.name]
                         return (
-                          <div key={field.id} className={field.className}>
+                          <div key={field.id} className={['min-w-0', field.className].join(' ')}>
                             <label
                               htmlFor={field.id}
                               className="block text-sm font-semibold tracking-tight text-navy-700"
@@ -331,7 +306,7 @@ export default function Contact() {
                               name={field.name}
                               type={field.type}
                               autoComplete={field.autoComplete}
-                              placeholder={field.placeholder}
+                              placeholder={field.placeholder || undefined}
                               value={values[field.name]}
                               onChange={handleChange}
                               disabled={submitting}
@@ -350,7 +325,7 @@ export default function Contact() {
                         )
                       })}
 
-                      <div className="sm:col-span-2">
+                      <div className="min-w-0 sm:col-span-2">
                         <label
                           htmlFor="contact-message"
                           className="block text-sm font-semibold tracking-tight text-navy-700"
@@ -364,7 +339,6 @@ export default function Contact() {
                           id="contact-message"
                           name="message"
                           rows={5}
-                          placeholder="Your requirements"
                           value={values.message}
                           onChange={handleChange}
                           disabled={submitting}
@@ -385,7 +359,10 @@ export default function Contact() {
                     </div>
 
                     {status === 'error' && (
-                      <p className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                      <p
+                        role="alert"
+                        className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"
+                      >
                         Your request could not be sent just now. Please try again.
                       </p>
                     )}
@@ -401,16 +378,15 @@ export default function Contact() {
                         aria-busy={submitting ? 'true' : 'false'}
                       >
                         {submitting && (
-                          <Loader2
-                            className="h-5 w-5 animate-spin"
-                            strokeWidth={2}
+                          <span
                             aria-hidden="true"
+                            className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-white/90"
                           />
                         )}
                         {contact.submitLabel}
                         {!submitting && (
                           <ArrowRight
-                            className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                            className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5"
                             aria-hidden="true"
                           />
                         )}

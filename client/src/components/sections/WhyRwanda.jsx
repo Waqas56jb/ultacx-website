@@ -1,6 +1,7 @@
 import Section from '../ui/Section.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import Reveal from '../ui/Reveal.jsx'
+import SmartImage from '../ui/SmartImage.jsx'
 import Icon from '../ui/Icon.jsx'
 import { whyRwanda } from '../../data/content.js'
 
@@ -59,10 +60,9 @@ export default function WhyRwanda() {
             />
 
             <figure className="relative overflow-hidden rounded-3xl shadow-deep">
-              <img
+              <SmartImage
                 src={whyRwanda.image}
                 alt={whyRwanda.imageAlt}
-                loading="lazy"
                 decoding="async"
                 className="aspect-[4/3] w-full object-cover"
               />

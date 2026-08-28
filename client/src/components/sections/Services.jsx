@@ -4,6 +4,7 @@ import Section from '../ui/Section.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import Button from '../ui/Button.jsx'
 import Reveal from '../ui/Reveal.jsx'
+import SmartImage from '../ui/SmartImage.jsx'
 import Icon from '../ui/Icon.jsx'
 import { services, contact, hero } from '../../data/content.js'
 
@@ -176,10 +177,9 @@ export default function Services() {
                 className="pointer-events-none absolute -left-4 -top-4 hidden h-24 w-24 rounded-tl-3xl border-l border-t border-gold-300/70 lg:block"
               />
               <div className="relative overflow-hidden rounded-3xl shadow-deep">
-                <img
+                <SmartImage
                   src={active.image}
                   alt={active.alt}
-                  loading="lazy"
                   decoding="async"
                   className="aspect-[4/3] w-full object-cover"
                 />

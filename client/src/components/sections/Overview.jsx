@@ -3,11 +3,12 @@ import Section from '../ui/Section.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import Button from '../ui/Button.jsx'
 import Reveal from '../ui/Reveal.jsx'
+import SmartImage from '../ui/SmartImage.jsx'
 import { home, hero } from '../../data/content.js'
 
 /* Stock photograph only — no claim is made that this depicts ULTA CX premises. */
 const OVERVIEW_IMAGE =
-  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80'
+  'https://images.unsplash.com/photo-1626863905121-3b0c0ed7b94c?auto=format&fit=crop&w=1400&q=80'
 
 /**
  * Introduction block: the positioning statement plus a composed image treatment.
@@ -85,11 +86,10 @@ export default function Overview() {
               />
 
               <div className="relative overflow-hidden rounded-3xl shadow-deep">
-                <img
+                <SmartImage
                   src={OVERVIEW_IMAGE}
-                  loading="lazy"
                   decoding="async"
-                  alt="A customer experience team collaborating around laptops at a shared table in a bright open-plan office"
+                  alt="Two customer service representatives wearing headsets at their workstations in a bright open-plan office"
                   className="aspect-[4/3] w-full object-cover sm:aspect-[16/10] lg:aspect-[4/5]"
                 />
                 {/* Soft navy scrim keeps the photograph tonally inside the brand palette */}

@@ -109,8 +109,8 @@ export const services = {
         'Customer retention support',
       ],
       image:
-        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Customer support representative assisting a customer by phone',
+        'https://images.unsplash.com/photo-1766066014237-00645c74e9c6?auto=format&fit=crop&w=1400&q=80',
+      alt: 'Customer support representative wearing a headset assisting a customer at her workstation',
     },
     {
       id: 'outbound',
@@ -129,8 +129,8 @@ export const services = {
         'Sales support',
       ],
       image:
-        'https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Team member making an outbound customer engagement call',
+        'https://images.unsplash.com/photo-1712159018726-4564d92f3ec2?auto=format&fit=crop&w=1400&q=80',
+      alt: 'Customer engagement representative wearing a headset making an outbound call',
     },
     {
       id: 'email-chat',
@@ -148,8 +148,8 @@ export const services = {
         'Ticket management and escalation',
       ],
       image:
-        'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Support agent responding to customer messages on a computer',
+        'https://images.unsplash.com/photo-1714079761488-e0c9b9ac4138?auto=format&fit=crop&w=1400&q=80',
+      alt: 'Support agent wearing a headset responding to customer emails and live chat on a laptop',
     },
     {
       id: 'back-office',
@@ -169,8 +169,8 @@ export const services = {
         'Case and ticket management',
       ],
       image:
-        'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Back-office team processing administrative documentation',
+        'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80',
+      alt: 'Back-office support team processing customer records and administrative work at their desks',
     },
     {
       id: 'after-hours',
@@ -188,8 +188,8 @@ export const services = {
         'Dedicated Teams',
       ],
       image:
-        'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Customer experience team working an extended-hours shift',
+        'https://images.unsplash.com/photo-1560264357-8d9202250f21?auto=format&fit=crop&w=1400&q=80',
+      alt: 'Customer experience representatives staffing an extended-hours shift on the support floor',
     },
   ],
 }

@@ -31,7 +31,7 @@ export default function Hero() {
     >
       {/* Photographic depth layer, held far back beneath the navy gradients */}
       <img
-        src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2000&q=80"
+        src="https://images.unsplash.com/photo-1560264280-88b68371db39?auto=format&fit=crop&w=2000&q=80"
         alt=""
         aria-hidden="true"
         loading="eager"
@@ -137,7 +137,7 @@ export default function Hero() {
       </div>
 
       <a
-        href="#about"
+        href="#overview"
         aria-label="Scroll to the next section"
         className="group absolute inset-x-0 bottom-7 mx-auto hidden w-max rounded-full border border-white/15 bg-white/5 p-2.5 text-navy-100/60 backdrop-blur-sm transition-colors duration-300 hover:border-white/35 hover:text-white sm:block"
       >
