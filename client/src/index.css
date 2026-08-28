@@ -168,3 +168,100 @@
     animation: none;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Cross-device layer — iOS Safari, Android Chrome, tablet, desktop
+   ───────────────────────────────────────────────────────────── */
+
+@layer base {
+  html {
+    /* Stop iOS from re-flowing type when the device is rotated */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    /* Kill the grey flash Android Chrome paints over tapped elements */
+    -webkit-tap-highlight-color: transparent;
+    /* Belt-and-braces against a stray wide child causing a sideways scroll */
+    overflow-x: hidden;
+  }
+
+  /* iOS Safari zooms the whole page when a focused input's text is under 16px.
+     Pin form controls to 16px on small screens so tapping a field never zooms. */
+  @media (max-width: 767px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
+  }
+
+  /* Touch devices have no real hover: a :hover style latches on after a tap and
+     stays stuck until the next tap elsewhere. Neutralise the lift/scale ones. */
+  @media (hover: none) {
+    .hover\:-translate-y-1:hover,
+    .hover\:-translate-y-1\.5:hover,
+    .hover\:-translate-y-0\.5:hover {
+      transform: none;
+    }
+  }
+
+  /* Give every control a comfortable target on touch without changing desktop.
+     44px is the Apple HIG minimum and matches Android's 48dp closely enough. */
+  @media (pointer: coarse) {
+    a[href],
+    button:not([disabled]),
+    [role='tab'] {
+      min-height: 44px;
+    }
+  }
+}
+
+@layer utilities {
+  /* Full-height that behaves on mobile browsers.
+     100vh on iOS Safari measures the viewport WITHOUT the collapsing URL bar,
+     so a 100vh hero is taller than the screen and its bottom is cut off.
+     dvh tracks the visible area; the vh line is the fallback for old browsers. */
+  .min-h-screen-safe {
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .h-screen-dynamic {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  /* Respect the notch / home indicator / Android gesture bar */
+  .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .px-safe {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  /* Momentum scrolling for the horizontal strips (service tabs, marquee) */
+  .scroll-touch {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  /* Hide the scrollbar on the horizontal tab strip without losing scrollability */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Safari still needs the prefix for backdrop-filter (navbar, glass panels) */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .backdrop-blur-md,
+  .backdrop-blur-sm,
+  .glass-dark {
+    -webkit-backdrop-filter: blur(12px);
+  }
+}

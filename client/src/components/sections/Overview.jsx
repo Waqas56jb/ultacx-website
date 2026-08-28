@@ -3,7 +3,10 @@ import Section from '../ui/Section.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import Button from '../ui/Button.jsx'
 import Reveal from '../ui/Reveal.jsx'
+import TextReveal from '../ui/TextReveal.jsx'
+import TiltCard from '../ui/TiltCard.jsx'
 import SmartImage from '../ui/SmartImage.jsx'
+import useParallax from '../../hooks/useParallax.js'
 import { home, hero } from '../../data/content.js'
 
 /* Stock photograph only — no claim is made that this depicts ULTA CX premises. */
@@ -15,14 +18,34 @@ const OVERVIEW_IMAGE =
  *
  * Every sentence is read from `home` / `hero` in src/data/content.js. The only
  * hardcoded string is the one-word structural eyebrow that labels the section.
+ *
+ * Depth layer: the image column drifts against the text column on scroll, the
+ * offset outline behind the photograph drifts again at its own rate, and the
+ * photograph itself tilts toward the pointer. All three are pure transform /
+ * opacity work and all three switch themselves off for reduced-motion users
+ * (useParallax and useTilt no-op; useTilt also no-ops on coarse pointers).
  */
 export default function Overview() {
+  // Negative speed moves the column against the scroll — reads as "further away".
+  const imageColumn = useParallax({ speed: -30 })
+  // Positive speed on the outline so it separates from the photo it sits behind.
+  const accentFrame = useParallax({ speed: 40 })
+
   return (
     <Section id="overview" tone="light">
       <div className="grid items-center gap-12 lg:grid-cols-2 xl:gap-16">
         {/* Text column */}
         <div className="order-1 min-w-0">
-          <SectionHeading align="left" eyebrow="Overview" title={home.heading} />
+          <SectionHeading align="left" eyebrow="Overview">
+            {/* Same h2 typography SectionHeading renders, revealed word by word */}
+            <TextReveal
+              as="h2"
+              text={home.heading}
+              stagger={55}
+              delay={90}
+              className="mt-5 text-display-md text-balance text-navy-800"
+            />
+          </SectionHeading>
 
           <div className="mt-7 max-w-2xl space-y-5">
             {home.paragraphs.map((paragraph, i) => (
@@ -73,37 +96,55 @@ export default function Overview() {
 
         {/* Image column — sits below the text on mobile */}
         <div className="order-2 min-w-0">
-          <Reveal delay={140}>
-            <div className="relative mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none">
-              {/* Offset outline accent behind the photograph */}
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute -bottom-5 -right-5 hidden h-full w-full rounded-3xl border border-azure-200 sm:block"
-              />
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute -left-6 -top-6 hidden h-24 w-24 rounded-3xl bg-azure-50 lg:block"
-              />
+          {/* Vertical-only parallax: no horizontal travel, so nothing can widen the row */}
+          <div ref={imageColumn} className="will-change-transform motion-reduce:will-change-auto">
+            <Reveal delay={140}>
+              <div className="relative mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none">
+                {/* Offset outline accent behind the photograph — drifts at its own rate */}
+                <span
+                  ref={accentFrame}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -bottom-5 -right-5 hidden h-full w-full rounded-3xl border border-azure-200 will-change-transform motion-reduce:will-change-auto sm:block"
+                />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -left-6 -top-6 hidden h-24 w-24 rounded-3xl bg-azure-50 lg:block"
+                />
 
-              <div className="relative overflow-hidden rounded-3xl shadow-deep">
-                <SmartImage
-                  src={OVERVIEW_IMAGE}
-                  decoding="async"
-                  alt="Two customer service representatives wearing headsets at their workstations in a bright open-plan office"
-                  className="aspect-[4/3] w-full object-cover sm:aspect-[16/10] lg:aspect-[4/5]"
-                />
-                {/* Soft navy scrim keeps the photograph tonally inside the brand palette */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-900/45 via-navy-900/5 to-transparent"
-                />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-navy-900/10"
-                />
+                <TiltCard
+                  max={7}
+                  glareTone="light"
+                  className="overflow-hidden rounded-3xl shadow-deep"
+                >
+                  <SmartImage
+                    src={OVERVIEW_IMAGE}
+                    decoding="async"
+                    alt="Two customer service representatives wearing headsets at their workstations in a bright open-plan office"
+                    className="aspect-[4/3] w-full object-cover backface-hidden sm:aspect-[16/10] lg:aspect-[4/5]"
+                  />
+                  {/* Soft navy scrim keeps the photograph tonally inside the brand palette */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-900/45 via-navy-900/5 to-transparent"
+                  />
+                  {/*
+                    Specular highlight that follows the pointer. It rides the --mx/--my/--glare
+                    custom properties useTilt publishes on the card, so there is still only one
+                    pointer listener here; TiltCard's own glare sits beneath the opaque photo.
+                    Untouched on touch and reduced motion, where the hook never sets --glare.
+                  */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 rounded-3xl bg-[radial-gradient(340px_circle_at_var(--mx,50%)_var(--my,50%),rgba(255,255,255,0.20),transparent_60%)] opacity-[var(--glare,0)] transition-opacity duration-300"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-navy-900/10"
+                  />
+                </TiltCard>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </div>
     </Section>
