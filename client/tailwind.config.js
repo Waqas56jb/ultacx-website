@@ -91,11 +91,16 @@ export default {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-12px)' },
         },
+        'spin-mark': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) forwards',
         marquee: 'marquee 38s linear infinite',
         float: 'float 7s ease-in-out infinite',
+        'spin-mark': 'spin-mark 12s linear infinite',
       },
     },
   },

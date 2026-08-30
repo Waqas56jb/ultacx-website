@@ -18,7 +18,11 @@ export default function Logo({
         height="987"
         loading={loading}
         decoding="async"
-        className={['block w-auto select-none', className].join(' ')}
+        className={[
+          'block w-auto shrink-0 origin-center select-none',
+          'animate-spin-mark motion-reduce:animate-none',
+          className,
+        ].join(' ')}
       />
       <span className="min-w-0 leading-none">
         <span
