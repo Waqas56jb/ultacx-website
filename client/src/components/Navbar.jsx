@@ -109,9 +109,9 @@ export default function Navbar() {
               to="/#home"
               onClick={closeMenu}
               aria-label={company.name}
-              className="flex shrink-0 items-center"
+              className="-ml-2 flex shrink-0 items-center sm:-ml-3 lg:-ml-4"
             >
-              <Logo onDark={!solid} className="h-9 w-auto sm:h-10" />
+              <Logo onDark={!solid} className="h-12 w-auto sm:h-14" />
             </Link>
 
             {/* Desktop links: xl and up only, so eight labels plus the CTA

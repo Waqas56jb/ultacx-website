@@ -10,20 +10,18 @@ export default function Logo({
   loading = 'eager',
 }) {
   return (
-    <span className="inline-flex items-center gap-2.5 sm:gap-3">
-      <img
-        src="/logo-nav.png"
-        alt=""
-        width="966"
-        height="987"
-        loading={loading}
-        decoding="async"
-        className={[
-          'block w-auto shrink-0 origin-center select-none',
-          'animate-spin-mark motion-reduce:animate-none',
-          className,
-        ].join(' ')}
-      />
+    <span className="inline-flex items-center gap-2 sm:gap-2.5">
+      <span className="logo-spin inline-block shrink-0">
+        <img
+          src="/logo-nav.png"
+          alt=""
+          width="966"
+          height="987"
+          loading={loading}
+          decoding="async"
+          className={['block w-auto select-none', className].join(' ')}
+        />
+      </span>
       <span className="min-w-0 leading-none">
         <span
           className={[

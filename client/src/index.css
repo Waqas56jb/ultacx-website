@@ -33,7 +33,9 @@
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    *, *::before, *::after {
+    *:not(.logo-spin),
+    *::before,
+    *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
@@ -78,6 +80,17 @@
   .pause-on-hover:hover {
     animation-play-state: paused;
   }
+}
+
+@keyframes logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.logo-spin {
+  display: block;
+  transform-origin: center center;
+  animation: logo-spin 7s linear infinite !important;
 }
 
 /* ─────────────────────────────────────────────────────────────
