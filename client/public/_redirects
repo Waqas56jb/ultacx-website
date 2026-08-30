@@ -1,0 +1,3 @@
+# Netlify SPA fallback — every route serves the app shell so a refresh on
+# /about or /services renders that page instead of a host 404.
+/*    /index.html   200
