@@ -1,17 +1,35 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, Check } from 'lucide-react'
 import Section from '../ui/Section.jsx'
 import SectionHeading from '../ui/SectionHeading.jsx'
 import Button from '../ui/Button.jsx'
 import Reveal from '../ui/Reveal.jsx'
+import TextReveal from '../ui/TextReveal.jsx'
+import TiltCard from '../ui/TiltCard.jsx'
 import SmartImage from '../ui/SmartImage.jsx'
 import Icon from '../ui/Icon.jsx'
+import useReducedMotion from '../../hooks/useReducedMotion.js'
 import { services, contact, hero } from '../../data/content.js'
 
 /**
  * Our Services — the centrepiece of the page.
  * Five services presented as an accessible tab set: a pill strip
  * (horizontally scrollable on small screens) driving a two-column panel.
+ *
+ * Depth layer: the panel is a perspective stage. On every tab change the two
+ * columns are remounted and settle from a small rotateY / negative translateZ
+ * back to flat on staggered delays, so the swap reads as two planes turning
+ * into place rather than one rectangle being replaced. The photograph tilts
+ * toward the pointer with the glass service badge lifted onto a higher Z plane.
+ *
+ * The settle is driven by one state flip per tab change (never per frame), and
+ * only `transform` / `opacity` are animated. Under reduced motion the columns
+ * render settled and nothing moves.
+ *
+ * Note: TiltCard and its inner layer keep `transform-style: preserve-3d`, so
+ * neither may take `overflow-hidden` — that would flatten the Z stack and drop
+ * the badge back onto the surface. The photo is clipped by its own flat wrapper
+ * inside the card instead.
  */
 
 const CHIP_TONES = [
@@ -26,12 +44,47 @@ const PANEL_ID = 'services-panel'
 const tabId = (id) => `services-tab-${id}`
 const pad = (n) => String(n).padStart(2, '0')
 
+// Both panel columns share one easing and duration; only the delay and the
+// angle they turn from differ, which is what makes the swap feel layered.
+const COLUMN_MOTION =
+  'transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
+
 export default function Services() {
   const items = services.items
   const [activeIndex, setActiveIndex] = useState(0)
+  const [entered, setEntered] = useState(false)
   const tabRefs = useRef([])
+  const reduced = useReducedMotion()
 
   const active = items[activeIndex]
+
+  // One state flip per tab change: the remounted columns paint at their entry
+  // transform, then settle to flat on the next frame.
+  useEffect(() => {
+    if (reduced) {
+      setEntered(true)
+      return undefined
+    }
+
+    setEntered(false)
+    let inner = 0
+    const outer = requestAnimationFrame(() => {
+      inner = requestAnimationFrame(() => setEntered(true))
+    })
+
+    return () => {
+      cancelAnimationFrame(outer)
+      cancelAnimationFrame(inner)
+    }
+  }, [activeIndex, reduced])
+
+  const settled = entered || reduced
+
+  const columnStyle = (delay, angle, depth) => ({
+    transitionDelay: `${delay}ms`,
+    transform: settled ? 'none' : `rotateY(${angle}deg) translateZ(${depth}px) translateY(18px)`,
+    opacity: settled ? 1 : 0,
+  })
 
   const moveTo = (index) => {
     const next = (index + items.length) % items.length
@@ -61,7 +114,11 @@ export default function Services() {
 
   return (
     <Section id="services" tone="light">
-      <SectionHeading eyebrow={services.eyebrow} title={services.heading} align="center" />
+      <SectionHeading
+        eyebrow={services.eyebrow}
+        title={<TextReveal text={services.heading} delay={90} stagger={55} />}
+        align="center"
+      />
 
       {/* Tab strip: scrollable on mobile, a centred pill row from lg up */}
       <Reveal delay={220}>
@@ -89,11 +146,11 @@ export default function Services() {
                 tabIndex={isActive ? 0 : -1}
                 onClick={() => setActiveIndex(i)}
                 className={[
-                  'inline-flex shrink-0 snap-start items-center gap-2.5 whitespace-nowrap rounded-full border',
+                  'relative inline-flex shrink-0 snap-start items-center gap-2.5 whitespace-nowrap rounded-full border',
                   'px-5 py-3 text-sm font-semibold tracking-tight transition-all duration-300 ease-out',
                   isActive
-                    ? 'border-navy-800 bg-navy-800 text-white shadow-lift'
-                    : 'border-navy-100 bg-white text-navy-600 hover:border-navy-300 hover:text-navy-800',
+                    ? '-translate-y-0.5 border-navy-800 bg-navy-800 text-white shadow-lift'
+                    : 'border-navy-100 bg-white text-navy-600 hover:-translate-y-0.5 hover:border-navy-300 hover:text-navy-800 hover:shadow-soft',
                 ].join(' ')}
               >
                 <Icon
@@ -104,6 +161,15 @@ export default function Services() {
                   ].join(' ')}
                 />
                 {item.title}
+                {/* Selection indicator: a hairline that opens from the centre of the pill */}
+                <span
+                  aria-hidden="true"
+                  className={[
+                    'pointer-events-none absolute inset-x-5 bottom-[7px] h-px origin-center rounded-full bg-accent-sweep',
+                    'transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+                    isActive ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0',
+                  ].join(' ')}
+                />
               </button>
             )
           })}
@@ -117,14 +183,14 @@ export default function Services() {
           role="tabpanel"
           tabIndex={0}
           aria-labelledby={tabId(active.id)}
-          className="mt-8 rounded-3xl border border-navy-100 bg-navy-50/40 p-6 shadow-soft sm:mt-10 sm:p-9 lg:p-12"
+          className="perspective-1600 mt-8 rounded-3xl border border-navy-100 bg-navy-50/40 p-6 shadow-soft sm:mt-10 sm:p-9 lg:p-12"
         >
           <div
             key={activeIndex}
-            className="grid animate-fade-up items-center gap-10 lg:grid-cols-2 xl:gap-14"
+            className="grid transform-3d items-center gap-10 lg:grid-cols-2 xl:gap-14"
           >
             {/* Copy column */}
-            <div>
+            <div className={COLUMN_MOTION} style={columnStyle(0, 5, -40)}>
               <div className="flex items-center gap-4">
                 <span
                   className={[
@@ -158,7 +224,7 @@ export default function Services() {
                   <Reveal
                     key={entry}
                     as="li"
-                    delay={i * 70}
+                    delay={i * 30}
                     className="flex items-start gap-3 text-[15px] leading-snug text-navy-600"
                   >
                     <span className="mt-0.5 inline-flex shrink-0 rounded-full bg-moss-50 p-1 text-moss-500">
@@ -171,29 +237,44 @@ export default function Services() {
             </div>
 
             {/* Image column */}
-            <div className="relative">
+            <div className={`relative ${COLUMN_MOTION}`} style={columnStyle(130, -6, -60)}>
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute -left-4 -top-4 hidden h-24 w-24 rounded-tl-3xl border-l border-t border-gold-300/70 lg:block"
               />
-              <div className="relative overflow-hidden rounded-3xl shadow-deep">
-                <SmartImage
-                  src={active.image}
-                  alt={active.alt}
-                  decoding="async"
-                  className="aspect-[4/3] w-full object-cover"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/15 to-transparent"
-                />
-                <div className="glass-dark absolute bottom-5 left-5 right-5 inline-flex items-center gap-2.5 rounded-2xl px-4 py-3 text-white">
+              {/* `glare` stays on: it is what publishes --mx / --my / --glare for the
+                  sheen below. The primitive's own glare layer is behind the photo. */}
+              <TiltCard max={7} glareTone="dark" className="group rounded-3xl shadow-deep">
+                {/* Flat wrapper carries the clip so the card itself keeps preserve-3d */}
+                <div className="relative overflow-hidden rounded-3xl">
+                  <SmartImage
+                    src={active.image}
+                    alt={active.alt}
+                    decoding="async"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/15 to-transparent"
+                  />
+                  {/* Light that follows the pointer, driven by the tilt hook's own vars */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(360px_circle_at_var(--mx,50%)_var(--my,50%),rgba(255,255,255,0.16),transparent_62%)] opacity-[var(--glare,0)] transition-opacity duration-300"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="edge-sheen pointer-events-none absolute inset-x-8 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  />
+                </div>
+
+                <div className="glass-dark depth-2 absolute bottom-5 left-5 right-5 inline-flex items-center gap-2.5 rounded-2xl px-4 py-3 text-white">
                   <Icon name={active.icon} className="h-4 w-4 shrink-0 text-azure-200" />
                   <span className="truncate text-xs font-semibold tracking-tight">
                     {active.title}
                   </span>
                 </div>
-              </div>
+              </TiltCard>
             </div>
           </div>
         </div>

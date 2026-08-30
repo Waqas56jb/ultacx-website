@@ -42,6 +42,12 @@ const ACCENTS = [
 // `transition-all` (which the primitive's own transition-transform would beat
 // in the cascade). Naming the properties inline keeps the shadow and border
 // eased on hover while the tilt stays smooth.
+//
+// For the same reason the card carries no `hover:-translate-y-*`: a second
+// transform on this node is overwritten by the tilt write on the first pointer
+// move (and snaps back on the next), so the lift would silently die or jitter.
+// The 7deg tilt already supplies the lift; the shadow, border, glare and edge
+// sheen carry the rest of the hover state, on every pointer and with no motion.
 const CARD_TRANSITION = { transitionProperty: 'transform, box-shadow, border-color' }
 
 const renderPill = (item, key) => (
@@ -76,7 +82,7 @@ export default function Industries() {
                   max={7}
                   glareTone="light"
                   style={CARD_TRANSITION}
-                  className="group h-full rounded-2xl border border-navy-100 bg-white shadow-soft hover:-translate-y-1 hover:border-navy-200 hover:shadow-lift"
+                  className="group h-full rounded-2xl border border-navy-100 bg-white shadow-soft hover:border-navy-200 hover:shadow-lift"
                   innerClassName="flex h-full flex-col p-7"
                 >
                   <span

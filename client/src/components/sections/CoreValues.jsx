@@ -18,6 +18,11 @@ import { about } from '../../data/content.js'
  *   depth-2 (36px)     icon chip
  * The frosted panel is a leaf layer rather than a wrapper, because
  * backdrop-filter on an ancestor would flatten the 3D context above it.
+ *
+ * The hover lift sits on the inner layer, never on the TiltCard node itself:
+ * the tilt hook writes `transform` straight to that node, so a second
+ * transform class there is overwritten on the first pointer move (and snaps
+ * back on the next), which kills the lift silently.
  */
 export default function CoreValues() {
   return (
@@ -56,8 +61,8 @@ export default function CoreValues() {
                   max={8}
                   scale={1.01}
                   glareTone="dark"
-                  className="group h-full rounded-2xl hover:-translate-y-1"
-                  innerClassName="h-full"
+                  className="group h-full rounded-2xl"
+                  innerClassName="h-full transition-transform duration-300 ease-out group-hover:-translate-y-1 motion-reduce:transition-none"
                 >
                   {/* Frosted surface — the card's z = 0 plane */}
                   <span

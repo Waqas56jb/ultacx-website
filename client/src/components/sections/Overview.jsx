@@ -37,13 +37,20 @@ export default function Overview() {
         {/* Text column */}
         <div className="order-1 min-w-0">
           <SectionHeading align="left" eyebrow="Overview">
-            {/* Same h2 typography SectionHeading renders, revealed word by word */}
+            {/*
+              Same h2 typography SectionHeading renders, revealed word by word.
+              TextReveal keeps the separating space INSIDE each word's
+              inline-block wrapper, and a trailing collapsible space at the end
+              of a line box is trimmed — which renders the heading as
+              "ExceptionalCustomer...". white-space:pre on those wrappers keeps
+              the space; the h2 itself still wraps normally between words.
+            */}
             <TextReveal
               as="h2"
               text={home.heading}
               stagger={55}
               delay={90}
-              className="mt-5 text-display-md text-balance text-navy-800"
+              className="mt-5 text-display-md text-balance text-navy-800 [&>span]:whitespace-pre"
             />
           </SectionHeading>
 
