@@ -219,23 +219,22 @@ export default function Hero() {
           {/* One word per TextReveal so the gaps between words stay in the h1's
               own text flow, and so the gradient span wraps exactly the closing
               words while the stagger keeps running across the whole line. */}
-          <h1 className="mt-7 text-display-xl text-balance text-white">
+          <h1 className="mt-7 text-display-xl leading-[1.12] text-balance text-white">
             {headlineLead.map((word, i) => (
               <Fragment key={`lead-${word}-${i}`}>
                 <TextReveal text={word} delay={HEADLINE_DELAY + i * WORD_STAGGER} />{' '}
               </Fragment>
             ))}
-            <span className="text-gradient-brand">
-              {headlineFocus.map((word, i) => (
-                <Fragment key={`focus-${word}-${i}`}>
-                  <TextReveal
-                    text={word}
-                    delay={HEADLINE_DELAY + (headlineLead.length + i) * WORD_STAGGER}
-                  />
-                  {i < headlineFocus.length - 1 ? ' ' : ''}
-                </Fragment>
-              ))}
-            </span>
+            {headlineFocus.map((word, i) => (
+              <Fragment key={`focus-${word}-${i}`}>
+                <TextReveal
+                  text={word}
+                  wordClassName="text-gradient-brand"
+                  delay={HEADLINE_DELAY + (headlineLead.length + i) * WORD_STAGGER}
+                />
+                {i < headlineFocus.length - 1 ? ' ' : ''}
+              </Fragment>
+            ))}
           </h1>
 
           <Reveal delay={170}>

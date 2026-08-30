@@ -15,6 +15,7 @@ export default function TextReveal({
   stagger = 45,
   delay = 0,
   className = '',
+  wordClassName = '',
 }) {
   const ref = useRef(null)
   const [shown, setShown] = useState(false)
@@ -48,11 +49,12 @@ export default function TextReveal({
   return (
     <Tag ref={ref} className={className}>
       {words.map((word, i) => (
-        <span key={`${word}-${i}`} className="inline-block overflow-hidden align-bottom">
+        <span key={`${word}-${i}`} className="inline-block overflow-hidden align-bottom pb-[0.12em]">
           <span
             className={[
               'inline-block transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
               shown ? 'translate-y-0 opacity-100' : 'translate-y-[0.9em] opacity-0',
+              wordClassName,
             ].join(' ')}
             style={{ transitionDelay: `${delay + i * stagger}ms` }}
           >
