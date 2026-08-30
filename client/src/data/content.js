@@ -109,8 +109,8 @@ export const services = {
         'Customer retention support',
       ],
       image:
-        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Customer support representative assisting a customer at her workstation',
+        'https://images.unsplash.com/photo-1549086802-bb458f399f05?auto=format&fit=crop&w=1400&q=80',
+      alt: 'Customer support representative wearing headphones at his workstation',
     },
     {
       id: 'outbound',
@@ -129,8 +129,8 @@ export const services = {
         'Sales support',
       ],
       image:
-        'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Customer engagement representative speaking with a customer',
+        'https://images.unsplash.com/photo-1597389682429-10dd16d6bbd6?auto=format&fit=crop&w=1400&q=80',
+      alt: 'Customer engagement representative speaking with a customer by telephone',
     },
     {
       id: 'email-chat',
@@ -148,7 +148,7 @@ export const services = {
         'Ticket management and escalation',
       ],
       image:
-        'https://images.unsplash.com/photo-1573497019236-17f8177b81e8?auto=format&fit=crop&w=1400&q=80',
+        'https://images.unsplash.com/photo-1544813813-2c73bec209ca?auto=format&fit=crop&w=1400&q=80',
       alt: 'Support agent responding to customer emails and live chat on a laptop',
     },
     {
@@ -169,8 +169,8 @@ export const services = {
         'Case and ticket management',
       ],
       image:
-        'https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Back-office professional reviewing customer records and administrative work',
+        'https://images.unsplash.com/photo-1642929426263-caf1617ced29?auto=format&fit=crop&w=1400&q=80',
+      alt: 'Back-office professional reviewing customer records on a tablet',
     },
     {
       id: 'after-hours',
@@ -188,8 +188,8 @@ export const services = {
         'Dedicated Teams',
       ],
       image:
-        'https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Customer experience representative staffing an extended-hours support shift',
+        'https://images.unsplash.com/photo-1653566031587-114b636e182b?auto=format&fit=crop&w=1400&q=80',
+      alt: 'Customer experience colleagues supporting each other through an extended-hours shift',
     },
   ],
 }
