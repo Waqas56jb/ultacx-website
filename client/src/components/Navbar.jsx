@@ -6,10 +6,6 @@ import Logo from './ui/Logo.jsx'
 import Reveal from './ui/Reveal.jsx'
 import { company, hero, nav } from '../data/content.js'
 
-function homeSection(href) {
-  return `/${href}`
-}
-
 /**
  * Fixed top navigation.
  *
@@ -17,9 +13,8 @@ function homeSection(href) {
  * blurred bar with a hairline border once the page is scrolled. A 2px gradient
  * hairline along the bottom edge tracks reading progress.
  *
- * The full link row only appears from `xl` up: there are eight primary links
- * plus a CTA, which cannot fit beside the logo on a 1024px viewport without
- * forcing horizontal overflow. Below that the compact panel takes over.
+ * The full link row appears from `lg` up now that primary navigation is four
+ * pages. Below that the compact panel takes over.
  *
  * The compact panel is a SIBLING of <header>, not a child. The solid header
  * carries `backdrop-blur`, and a non-none backdrop-filter makes an element a
@@ -78,7 +73,7 @@ export default function Navbar() {
       setOpen(false)
       if (toggleRef.current) toggleRef.current.focus()
     }
-    const desktop = window.matchMedia('(min-width: 1280px)')
+    const desktop = window.matchMedia('(min-width: 1024px)')
     const onBreakpoint = (event) => {
       if (event.matches) setOpen(false)
     }
@@ -106,7 +101,7 @@ export default function Navbar() {
         <nav aria-label="Primary" className="container-x">
           <div className="flex h-[68px] items-center justify-between gap-4 sm:h-[76px]">
             <Link
-              to="/#home"
+              to="/"
               onClick={closeMenu}
               aria-label={company.name}
               className="-ml-2 flex shrink-0 items-center sm:-ml-3 lg:-ml-4"
@@ -114,34 +109,40 @@ export default function Navbar() {
               <Logo onDark={!solid} className="h-12 w-auto sm:h-14" />
             </Link>
 
-            {/* Desktop links: xl and up only, so eight labels plus the CTA
-                always have room beside the logo. */}
-            <ul className="hidden min-w-0 items-center gap-0.5 xl:flex 2xl:gap-1">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    to={homeSection(item.href)}
-                    className={[
-                      'group relative block whitespace-nowrap rounded-md px-2.5 py-2 text-[13px] font-medium',
-                      'transition-colors duration-300 ease-out 2xl:px-3',
-                      solid ? 'text-navy-600 hover:text-navy-900' : 'text-white/90 hover:text-white',
-                    ].join(' ')}
-                  >
-                    <span className="relative">
-                      {item.label}
-                      <span
-                        aria-hidden="true"
-                        className="absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 bg-accent-sweep transition-transform duration-300 ease-out group-hover:scale-x-100"
-                      />
-                    </span>
-                  </Link>
-                </li>
-              ))}
+            <ul className="hidden min-w-0 items-center gap-0.5 lg:flex 2xl:gap-1">
+              {nav.map((item) => {
+                const active = location.pathname === item.href
+                return (
+                  <li key={item.href}>
+                    <Link
+                      to={item.href}
+                      aria-current={active ? 'page' : undefined}
+                      className={[
+                        'group relative block whitespace-nowrap rounded-md px-2.5 py-2 text-[13px] font-medium',
+                        'transition-colors duration-300 ease-out 2xl:px-3',
+                        solid ? 'text-navy-600 hover:text-navy-900' : 'text-white/90 hover:text-white',
+                        active ? (solid ? 'text-navy-900' : 'text-white') : '',
+                      ].join(' ')}
+                    >
+                      <span className="relative">
+                        {item.label}
+                        <span
+                          aria-hidden="true"
+                          className={[
+                            'absolute -bottom-1.5 left-0 h-px w-full origin-left bg-accent-sweep transition-transform duration-300 ease-out',
+                            active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
+                          ].join(' ')}
+                        />
+                      </span>
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
 
             <div className="flex shrink-0 items-center gap-2 sm:gap-3">
               <Button
-                href="/#contact"
+                href="/contact"
                 size="sm"
                 variant={solid ? 'accent' : 'ghostDark'}
                 className="hidden whitespace-nowrap sm:inline-flex"
@@ -161,7 +162,7 @@ export default function Navbar() {
                 aria-controls="mobile-nav-panel"
                 aria-label={open ? 'Close main menu' : 'Open main menu'}
                 className={[
-                  'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 ease-out xl:hidden',
+                  'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 ease-out lg:hidden',
                   solid
                     ? 'border-navy-100 bg-white text-navy-700 hover:border-navy-200 hover:bg-navy-50'
                     : 'border-white/25 bg-white/10 text-white backdrop-blur-sm hover:border-white/45 hover:bg-white/20',
@@ -196,7 +197,7 @@ export default function Navbar() {
         aria-label="Site sections"
         className={[
           'fixed inset-x-0 bottom-0 top-[68px] z-40 overflow-y-auto overscroll-contain',
-          'bg-white sm:top-[76px] xl:hidden',
+          'bg-white sm:top-[76px] lg:hidden',
           open ? 'block' : 'hidden',
         ].join(' ')}
       >
@@ -206,7 +207,7 @@ export default function Navbar() {
               <li key={item.href}>
                 <Reveal delay={i * 70}>
                   <Link
-                    to={homeSection(item.href)}
+                    to={item.href}
                     onClick={closeMenu}
                     className="group flex items-center justify-between gap-4 border-b border-navy-100 py-4 font-display text-xl font-semibold tracking-tight text-navy-800 transition-colors duration-300 ease-out hover:text-azure-600"
                   >
@@ -224,7 +225,7 @@ export default function Navbar() {
           <Reveal delay={nav.length * 70}>
             <div>
               <Button
-                href="/#contact"
+                href="/contact"
                 size="md"
                 variant="accent"
                 onClick={closeMenu}

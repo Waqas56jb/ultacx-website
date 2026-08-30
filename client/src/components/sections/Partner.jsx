@@ -221,7 +221,7 @@ export default function Partner() {
                 {partner.ctas.map((label, i) => (
                   <MagneticButton
                     key={label}
-                    href="#contact"
+                    href="/contact"
                     size="lg"
                     variant={i === 0 ? 'onDark' : 'ghostDark'}
                   >

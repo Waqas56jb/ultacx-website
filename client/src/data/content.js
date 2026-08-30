@@ -423,14 +423,10 @@ export const contact = {
 }
 
 export const nav = [
-  { label: 'Home', href: '#home' },
-  { label: 'About Us', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Industries', href: '#industries' },
-  { label: 'Why Rwanda', href: '#why-rwanda' },
-  { label: 'Quality & Security', href: '#quality-security' },
-  { label: 'Partner With Us', href: '#partner' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'About Us', href: '/about' },
+  { label: 'Services', href: '/services' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 export const legalLinks = [

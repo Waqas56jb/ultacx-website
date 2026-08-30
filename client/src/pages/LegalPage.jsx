@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Mail, MapPin, Globe } from 'lucide-react'
-import Navbar from '../components/Navbar.jsx'
-import Footer from '../components/Footer.jsx'
+import SiteLayout from '../components/SiteLayout.jsx'
 import Reveal from '../components/ui/Reveal.jsx'
 import { company } from '../data/content.js'
 import { legalNav, legalPages, SITE_EMAIL, SITE_URL } from '../data/legal.js'
@@ -117,29 +115,16 @@ export default function LegalPage() {
   const slug = useLocation().pathname.replace(/^\/+|\/+$/g, '')
   const page = legalPages[slug]
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    if (page) {
-      document.title = `${page.title} | ${company.name}`
-    }
-    return () => {
-      document.title =
-        'ULTA CX Ltd — Customer Experience Solutions | Outsourced Support from Rwanda'
-    }
-  }, [page])
-
   if (!page) {
     return (
-      <>
-        <Navbar />
-        <main className="container-x py-32">
+      <SiteLayout title={`Page not found | ${company.name}`}>
+        <div className="container-x py-32">
           <h1 className="text-display-sm text-navy-800">Page not found</h1>
           <Link to="/" className="mt-6 inline-flex items-center gap-2 text-azure-700">
             Return home
           </Link>
-        </main>
-        <Footer />
-      </>
+        </div>
+      </SiteLayout>
     )
   }
 
@@ -147,10 +132,8 @@ export default function LegalPage() {
   const others = legalNav.filter((item) => item.href !== `/${page.slug}`)
 
   return (
-    <>
-      <Navbar />
-
-      <main id="legal-content">
+    <SiteLayout title={`${page.title} | ${company.name}`} unpadded skipHref="#legal-content">
+      <div id="legal-content">
         <header className="relative overflow-hidden bg-navy-800 pt-[calc(var(--nav-h)+2.5rem)] pb-16 text-white sm:pb-20">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-mesh-navy opacity-80" />
           <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-accent-sweep" />
@@ -265,9 +248,7 @@ export default function LegalPage() {
             </Link>
           </div>
         </section>
-      </main>
-
-      <Footer />
-    </>
+      </div>
+    </SiteLayout>
   )
 }

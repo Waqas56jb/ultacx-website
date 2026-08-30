@@ -245,14 +245,14 @@ export default function Hero() {
 
           <Reveal delay={250}>
             <div className="mt-10 flex flex-col items-stretch justify-center gap-3.5 sm:flex-row sm:items-center sm:gap-4">
-              <Button href="#contact" variant="accent" size="lg">
+              <Button href="/contact" variant="accent" size="lg">
                 {hero.primaryCta}
                 <ArrowRight
                   aria-hidden="true"
                   className="h-5 w-5 shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-1"
                 />
               </Button>
-              <Button href="#services" variant="ghostDark" size="lg">
+              <Button href="/services" variant="ghostDark" size="lg">
                 {hero.secondaryCta}
               </Button>
             </div>

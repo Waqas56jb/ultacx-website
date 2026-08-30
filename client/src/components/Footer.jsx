@@ -36,7 +36,7 @@ export default function Footer() {
           <div className="lg:col-span-5">
             <Reveal>
               <Link
-                to="/#home"
+                to="/"
                 className="inline-block overflow-hidden rounded-2xl bg-white p-3 shadow-soft ring-1 ring-white/10"
               >
                 <img
@@ -63,7 +63,7 @@ export default function Footer() {
               {nav.map((item, i) => (
                 <Reveal as="li" key={item.href} delay={i * 70}>
                   <Link
-                    to={`/${item.href}`}
+                    to={item.href}
                     className="group inline-flex items-center gap-2 rounded-sm py-1.5 text-sm text-navy-100/75 transition-colors duration-300 hover:text-white"
                   >
                     <ChevronRight
@@ -91,7 +91,7 @@ export default function Footer() {
             </Reveal>
 
             <Reveal delay={140}>
-              <Button href="/#contact" variant="onDark" size="sm" className="mt-6">
+              <Button href="/contact" variant="onDark" size="sm" className="mt-6">
                 {hero.primaryCta}
                 <ArrowRight
                   aria-hidden="true"

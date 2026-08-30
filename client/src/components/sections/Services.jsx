@@ -287,7 +287,7 @@ export default function Services() {
             <span aria-hidden="true" className="hidden h-10 w-px shrink-0 bg-gold-400 sm:block" />
             <p className="text-base leading-relaxed text-navy-500 sm:text-lg">{contact.intro}</p>
           </div>
-          <Button variant="primary" href="#contact" className="w-full shrink-0 sm:w-auto">
+          <Button variant="primary" href="/contact" className="w-full shrink-0 sm:w-auto">
             {hero.primaryCta}
             <ArrowRight
               className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"

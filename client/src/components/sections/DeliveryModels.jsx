@@ -100,7 +100,7 @@ export default function DeliveryModels() {
         <div className="mx-auto max-w-2xl">
           <div aria-hidden="true" className="rule-accent" />
           <div className="mt-8 flex justify-center">
-            <Button href="#contact" variant="outline" size="sm">
+            <Button href="/contact" variant="outline" size="sm">
               {partner.ctas[0]}
               <ArrowRight
                 aria-hidden="true"

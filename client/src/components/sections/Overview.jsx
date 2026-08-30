@@ -77,7 +77,7 @@ export default function Overview() {
 
           <Reveal delay={300}>
             <div className="mt-8 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-7">
-              <Button variant="primary" href="#services">
+              <Button variant="primary" href="/services">
                 {hero.secondaryCta}
                 <ArrowRight
                   aria-hidden="true"
@@ -87,7 +87,7 @@ export default function Overview() {
               </Button>
 
               <a
-                href="#contact"
+                href="/contact"
                 className="group inline-flex items-center gap-2 text-[15px] font-semibold text-navy-700 underline decoration-navy-200 decoration-1 underline-offset-[6px] transition-colors duration-300 hover:text-azure-600 hover:decoration-azure-300"
               >
                 {hero.primaryCta}
