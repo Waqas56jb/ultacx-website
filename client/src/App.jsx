@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
+import useHashScroll from './hooks/useHashScroll.js'
 
 import Hero from './components/sections/Hero.jsx'
 import Overview from './components/sections/Overview.jsx'
@@ -16,6 +17,8 @@ import Partner from './components/sections/Partner.jsx'
 import Contact from './components/sections/Contact.jsx'
 
 export default function App() {
+  useHashScroll()
+
   return (
     <>
       <a
