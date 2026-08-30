@@ -434,7 +434,7 @@ export const nav = [
 ]
 
 export const legalLinks = [
-  { label: 'Privacy Policy', href: '#' },
-  { label: 'Terms of Use', href: '#' },
-  { label: 'Data Protection', href: '#' },
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms of Use', href: '/terms-of-use' },
+  { label: 'Data Protection', href: '/data-protection' },
 ]

@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { ArrowRight, Menu, X } from 'lucide-react'
 import Button from './ui/Button.jsx'
 import Reveal from './ui/Reveal.jsx'
 import { company, hero, nav } from '../data/content.js'
+
+function homeSection(href) {
+  return `/${href}`
+}
 
 /**
  * Fixed top navigation.
@@ -21,6 +26,8 @@ import { company, hero, nav } from '../data/content.js'
  * would collapse it to the height of the bar itself.
  */
 export default function Navbar() {
+  const location = useLocation()
+  const onHome = location.pathname === '/'
   const [scrolled, setScrolled] = useState(false)
   const [progress, setProgress] = useState(0)
   const [open, setOpen] = useState(false)
@@ -28,9 +35,14 @@ export default function Navbar() {
 
   // The bar is also solid while the compact panel is open, so the logo,
   // toggle and links stay legible against the white panel beneath it.
-  const solid = scrolled || open
+  // Legal pages have no dark hero, so the bar stays solid there.
+  const solid = scrolled || open || !onHome
 
   const closeMenu = useCallback(() => setOpen(false), [])
+
+  useEffect(() => {
+    setOpen(false)
+  }, [location.pathname])
 
   useEffect(() => {
     const onScroll = () => {
@@ -94,8 +106,8 @@ export default function Navbar() {
           <div className="flex h-[68px] items-center justify-between gap-4 sm:h-[76px]">
             {/* Logo art has a white ground, so it wears a white chip whenever
                 the bar itself is transparent over the navy hero. */}
-            <a
-              href="#home"
+            <Link
+              to="/#home"
               onClick={closeMenu}
               className={[
                 'flex shrink-0 items-center rounded-lg transition-all duration-300 ease-out',
@@ -111,15 +123,15 @@ export default function Navbar() {
                 height="1024"
                 className="h-10 w-auto sm:h-11"
               />
-            </a>
+            </Link>
 
             {/* Desktop links: xl and up only, so eight labels plus the CTA
                 always have room beside the logo. */}
             <ul className="hidden min-w-0 items-center gap-0.5 xl:flex 2xl:gap-1">
               {nav.map((item) => (
                 <li key={item.href}>
-                  <a
-                    href={item.href}
+                  <Link
+                    to={homeSection(item.href)}
                     className={[
                       'group relative block whitespace-nowrap rounded-md px-2.5 py-2 text-[13px] font-medium',
                       'transition-colors duration-300 ease-out 2xl:px-3',
@@ -133,14 +145,14 @@ export default function Navbar() {
                         className="absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 bg-accent-sweep transition-transform duration-300 ease-out group-hover:scale-x-100"
                       />
                     </span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
 
             <div className="flex shrink-0 items-center gap-2 sm:gap-3">
               <Button
-                href="#contact"
+                href="/#contact"
                 size="sm"
                 variant={solid ? 'accent' : 'ghostDark'}
                 className="hidden whitespace-nowrap sm:inline-flex"
@@ -204,8 +216,8 @@ export default function Navbar() {
             {nav.map((item, i) => (
               <li key={item.href}>
                 <Reveal delay={i * 70}>
-                  <a
-                    href={item.href}
+                  <Link
+                    to={homeSection(item.href)}
                     onClick={closeMenu}
                     className="group flex items-center justify-between gap-4 border-b border-navy-100 py-4 font-display text-xl font-semibold tracking-tight text-navy-800 transition-colors duration-300 ease-out hover:text-azure-600"
                   >
@@ -214,7 +226,7 @@ export default function Navbar() {
                       className="h-4 w-4 shrink-0 text-navy-200 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:text-azure-500"
                       aria-hidden="true"
                     />
-                  </a>
+                  </Link>
                 </Reveal>
               </li>
             ))}
@@ -223,7 +235,7 @@ export default function Navbar() {
           <Reveal delay={nav.length * 70}>
             <div>
               <Button
-                href="#contact"
+                href="/#contact"
                 size="md"
                 variant="accent"
                 onClick={closeMenu}

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowUp, ChevronRight } from 'lucide-react'
 import Button from './ui/Button.jsx'
 import Reveal from './ui/Reveal.jsx'
@@ -70,8 +71,8 @@ export default function Footer() {
             <ul className="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
               {nav.map((item, i) => (
                 <Reveal as="li" key={item.href} delay={i * 70}>
-                  <a
-                    href={item.href}
+                  <Link
+                    to={`/${item.href}`}
                     className="group inline-flex items-center gap-2 rounded-sm py-1.5 text-sm text-navy-100/75 transition-colors duration-300 hover:text-white"
                   >
                     <ChevronRight
@@ -80,7 +81,7 @@ export default function Footer() {
                       className="h-3.5 w-3.5 shrink-0 text-azure-300/60 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-azure-200"
                     />
                     {item.label}
-                  </a>
+                  </Link>
                 </Reveal>
               ))}
             </ul>
@@ -99,7 +100,7 @@ export default function Footer() {
             </Reveal>
 
             <Reveal delay={140}>
-              <Button href="#contact" variant="onDark" size="sm" className="mt-6">
+              <Button href="/#contact" variant="onDark" size="sm" className="mt-6">
                 {hero.primaryCta}
                 <ArrowRight
                   aria-hidden="true"
@@ -117,7 +118,6 @@ export default function Footer() {
             <p className="text-center text-sm text-navy-100/60 sm:text-left">{company.copyright}</p>
 
             <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:justify-end">
-              {/* TODO: these three links point at "#" — real policy pages are required before launch. */}
               <nav
                 aria-label="Legal"
                 className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2"
@@ -125,21 +125,22 @@ export default function Footer() {
                 {legalLinks.map((link, i) => (
                   <span key={link.label} className="flex items-center gap-3">
                     {i > 0 && <span aria-hidden="true" className="hidden h-3.5 w-px bg-white/15 sm:block" />}
-                    <a
-                      href={link.href}
+                    <Link
+                      to={link.href}
                       className="rounded-sm text-sm text-navy-100/60 transition-colors duration-300 hover:text-white"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </span>
                 ))}
               </nav>
 
               <span aria-hidden="true" className="hidden h-3.5 w-px bg-white/15 sm:block" />
 
-              <a
-                href="#home"
+              <button
+                type="button"
                 aria-label="Back to top"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="group inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full glass-dark text-navy-100/80 transition-all duration-300 hover:bg-white/[0.12] hover:text-white"
               >
                 <ArrowUp
@@ -147,7 +148,7 @@ export default function Footer() {
                   strokeWidth={2}
                   className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5"
                 />
-              </a>
+              </button>
             </div>
           </div>
         </Reveal>
