@@ -11,7 +11,7 @@ import { home, hero } from '../../data/content.js'
 
 /* Stock photograph only — no claim is made that this depicts ULTA CX premises. */
 const OVERVIEW_IMAGE =
-  'https://images.unsplash.com/photo-1573164574397-dd250bc8a598?auto=format&fit=crop&w=1400&q=80'
+  'https://images.pexels.com/photos/5467606/pexels-photo-5467606.jpeg?auto=compress&cs=tinysrgb&w=1400'
 
 /**
  * Introduction block: the positioning statement plus a composed image treatment.
@@ -126,7 +126,7 @@ export default function Overview() {
                   <SmartImage
                     src={OVERVIEW_IMAGE}
                     decoding="async"
-                    alt="Colleagues collaborating around a laptop in a bright office — stock photograph, not ULTA CX premises"
+                    alt="Customer service representatives wearing headsets at their workstations — stock photograph, not ULTA CX premises"
                     className="aspect-[4/3] w-full object-cover backface-hidden sm:aspect-[16/10] lg:aspect-[4/5]"
                   />
                   {/* Soft navy scrim keeps the photograph tonally inside the brand palette */}

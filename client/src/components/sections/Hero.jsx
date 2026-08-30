@@ -143,7 +143,7 @@ export default function Hero() {
           style={drift(-10, -6)}
         >
           <img
-            src="https://images.unsplash.com/photo-1748345952129-3bdd7d39f155?auto=format&fit=crop&w=2000&q=80"
+            src="https://images.pexels.com/photos/7709152/pexels-photo-7709152.jpeg?auto=compress&cs=tinysrgb&w=2000"
             alt=""
             aria-hidden="true"
             loading="eager"

@@ -109,8 +109,8 @@ export const services = {
         'Customer retention support',
       ],
       image:
-        'https://images.unsplash.com/photo-1549086802-bb458f399f05?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Customer support representative wearing headphones at his workstation',
+        'https://images.pexels.com/photos/7709184/pexels-photo-7709184.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      alt: 'Customer support representative wearing a headset assisting a customer at her workstation',
     },
     {
       id: 'outbound',
@@ -129,8 +129,8 @@ export const services = {
         'Sales support',
       ],
       image:
-        'https://images.unsplash.com/photo-1597389682429-10dd16d6bbd6?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Customer engagement representative speaking with a customer by telephone',
+        'https://images.pexels.com/photos/7709132/pexels-photo-7709132.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      alt: 'Customer engagement representative wearing a headset speaking with a customer',
     },
     {
       id: 'email-chat',
@@ -148,8 +148,8 @@ export const services = {
         'Ticket management and escalation',
       ],
       image:
-        'https://images.unsplash.com/photo-1544813813-2c73bec209ca?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Support agent responding to customer emails and live chat on a laptop',
+        'https://images.pexels.com/photos/7709148/pexels-photo-7709148.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      alt: 'Support agent wearing a headset responding to customer emails and live chat on a laptop',
     },
     {
       id: 'back-office',
@@ -169,8 +169,8 @@ export const services = {
         'Case and ticket management',
       ],
       image:
-        'https://images.unsplash.com/photo-1642929426263-caf1617ced29?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Back-office professional reviewing customer records on a tablet',
+        'https://images.pexels.com/photos/7709242/pexels-photo-7709242.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      alt: 'Representative wearing a headset reviewing customer records at her workstation',
     },
     {
       id: 'after-hours',
@@ -188,8 +188,8 @@ export const services = {
         'Dedicated Teams',
       ],
       image:
-        'https://images.unsplash.com/photo-1653566031587-114b636e182b?auto=format&fit=crop&w=1400&q=80',
-      alt: 'Customer experience colleagues supporting each other through an extended-hours shift',
+        'https://images.pexels.com/photos/7709170/pexels-photo-7709170.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      alt: 'Customer experience representatives wearing headsets during an extended-hours shift',
     },
   ],
 }
