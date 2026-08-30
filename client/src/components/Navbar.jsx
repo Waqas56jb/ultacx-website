@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ArrowRight, Menu, X } from 'lucide-react'
 import Button from './ui/Button.jsx'
+import Logo from './ui/Logo.jsx'
 import Reveal from './ui/Reveal.jsx'
 import { company, hero, nav } from '../data/content.js'
 
@@ -104,25 +105,13 @@ export default function Navbar() {
       >
         <nav aria-label="Primary" className="container-x">
           <div className="flex h-[68px] items-center justify-between gap-4 sm:h-[76px]">
-            {/* Logo art has a white ground, so it wears a white chip whenever
-                the bar itself is transparent over the navy hero. */}
             <Link
               to="/#home"
               onClick={closeMenu}
-              className={[
-                'flex shrink-0 items-center rounded-lg transition-all duration-300 ease-out',
-                solid
-                  ? 'bg-transparent px-0 py-0'
-                  : 'bg-white px-3 py-1.5 shadow-[0_8px_24px_-10px_rgba(4,16,36,0.7)]',
-              ].join(' ')}
+              aria-label={company.name}
+              className="flex shrink-0 items-center"
             >
-              <img
-                src="/logo.png"
-                alt={company.name + ', ' + company.tagline}
-                width="1536"
-                height="1024"
-                className="h-10 w-auto sm:h-11"
-              />
+              <Logo onDark={!solid} className="h-9 w-auto sm:h-10" />
             </Link>
 
             {/* Desktop links: xl and up only, so eight labels plus the CTA

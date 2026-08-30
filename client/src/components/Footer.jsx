@@ -35,28 +35,19 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-5">
             <Reveal>
-              {/* /logo.png is a full-colour lockup on white, so it needs a white plate on navy. */}
-              <span className="inline-block rounded-xl bg-white p-3 shadow-deep">
+              <Link
+                to="/#home"
+                className="inline-block overflow-hidden rounded-2xl bg-white p-3 shadow-soft ring-1 ring-white/10"
+              >
                 <img
                   src="/logo.png"
-                  alt="ULTA CX Ltd — Customer Experience Solutions"
+                  alt={company.name + ' — ' + company.tagline}
+                  width="1536"
+                  height="1024"
                   loading="lazy"
-                  className="h-12 w-auto sm:h-14"
+                  className="block h-auto w-[220px] sm:w-[260px]"
                 />
-              </span>
-            </Reveal>
-
-            <Reveal delay={80}>
-              <p className="mt-7 text-[11px] font-semibold uppercase tracking-[0.22em] text-azure-200">
-                {company.tagline}
-              </p>
-              <p className="mt-3 max-w-sm font-display text-lg leading-relaxed text-navy-100/75 text-balance">
-                {company.promise}
-              </p>
-            </Reveal>
-
-            <Reveal delay={150}>
-              <span aria-hidden="true" className="mt-8 block h-px w-16 bg-accent-sweep" />
+              </Link>
             </Reveal>
           </div>
 
