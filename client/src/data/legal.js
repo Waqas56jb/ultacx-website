@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://ultacx.com'
+export const SITE_URL = 'https://ultacx-client.vercel.app'
 export const SITE_EMAIL = 'info@ultacx.com'
 
 export const legalPages = {
