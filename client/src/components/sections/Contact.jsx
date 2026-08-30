@@ -91,10 +91,15 @@ function validate(values) {
   return errors
 }
 
+const API_BASE = String(import.meta.env.VITE_API_URL || 'https://ultacx-server.vercel.app').replace(
+  /\/$/,
+  '',
+)
+
 async function sendEnquiry(payload) {
   if (!payload) throw new Error('Missing form payload')
 
-  const response = await fetch('/api/contact', {
+  const response = await fetch(`${API_BASE}/api/contact`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify(payload),
